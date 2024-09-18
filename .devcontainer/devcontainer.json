@@ -1,15 +1,28 @@
 {
-  "name": "MIL dev container",
-
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
-
-  "onCreateCommand": "echo \"Downloading the Lean 4 mathematical library...\" && lake exe cache get! && lake build +MIL.Common && echo \"Finished setup! Open a file using the Explorer in the top-left of your screen.\"",
-
-  "customizations": {
-    "vscode" : {
-      "extensions" : [ "leanprover.lean4" ]
-    }
-  }
+	"name": "Ubuntu",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": { "VARIANT": "ubuntu-22.04" }
+	},
+	"remoteUser": "vscode",
+	"features": {
+		"git": "os-provided"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"leanprover.lean4"
+			]
+		},
+		"codespaces": {
+			"openFiles": [
+				"Prova/MathlibExample.lean",
+				"Main.lean"
+			]
+		}
+	},
+	"postCreateCommand": [
+		"lake update",
+		"lake exe cache get"
+	]
 }
